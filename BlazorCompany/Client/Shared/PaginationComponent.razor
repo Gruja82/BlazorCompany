@@ -1,0 +1,51 @@
+﻿@typeparam TItem
+
+<nav>
+    <ul class="pagination">
+        @if (PaginationSet.PageIndex > 1)
+        {
+            <li class="page-item">
+                <button class="page-link" type="button" @onclick="(() => ChangePageNumber.InvokeAsync(PaginationSet.PageIndex - 1))">
+                    <span aria-hidden="true">&laquo;</span>
+                </button>
+            </li>
+        }
+
+        @for (int i = 1; i <= PaginationSet.TotalPages; i++)
+        {
+            int temp = i;
+
+            if (temp == PaginationSet.PageIndex)
+            {
+                <li class="page-item">
+                    <span class="btn btn-info">@temp</span>
+                </li>
+            }
+            else
+            {
+                <li class="page-item">
+                    <button class="btn btn-outline-info" type="button" value="@temp" @onclick="(() => ChangePageNumber.InvokeAsync(temp))">
+                        @temp
+                    </button>
+                </li>
+            }
+        }
+
+        @if (PaginationSet.PageIndex < PaginationSet.TotalPages)
+        {
+            <li class="page-item">
+                <button class="page-link" type="button" name="pageIndex" @onclick="(() => ChangePageNumber.InvokeAsync(PaginationSet.PageIndex + 1))">
+                    <span aria-hidden="true">&raquo;</span>
+                </button>
+            </li>
+        }
+    </ul>
+</nav>
+
+@code {
+    [Parameter]
+    public Pagination<TItem> PaginationSet { get; set; } = new();
+
+    [Parameter]
+    public EventCallback<int> ChangePageNumber { get; set; }
+}

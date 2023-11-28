@@ -1,0 +1,28 @@
+﻿@*<nav class="navbar navbar-light bg-light">
+    <input @bind="@searchTerm" class="form-control" placeholder="Search" type="text" />
+    <button type="button" class="btn btn-outline-success my-2 my-sm-0" @onclick="HandleOnSearchTermChanged">
+        Search
+    </button>
+</nav>*@
+
+<div class="input-group rounded">
+    <input @bind="@searchTerm" type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+    <span class="input-group-text border-0" id="search-addon">
+        <button type="button" class="btn btn-outline-success my-2 my-sm-0" @onclick="HandleOnSearchTermChanged">
+            Search
+        </button>
+        
+    </span>
+</div>
+
+@code {
+    private string? searchTerm;
+
+    [Parameter, EditorRequired]
+    public EventCallback<string> SearchTermChanged { get; set; }
+
+    private async Task HandleOnSearchTermChanged()
+    {
+        await SearchTermChanged.InvokeAsync(searchTerm);
+    }
+}

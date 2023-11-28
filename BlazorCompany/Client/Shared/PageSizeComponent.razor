@@ -1,0 +1,15 @@
+﻿@typeparam TItem
+
+Page size:
+<input class="form-check-input" @bind="@PaginationSet.PageSize" type="number" />
+<button type="button" class="btn btn-outline-success my-2 my-sm-0" @onclick="@(() => PageSizeChanged.InvokeAsync(PaginationSet.PageSize))">
+    Change
+</button>
+
+@code {
+    [Parameter]
+    public Pagination<TItem> PaginationSet { get; set; } = default!;
+
+    [Parameter]
+    public EventCallback<int> PageSizeChanged { get; set; }
+}
